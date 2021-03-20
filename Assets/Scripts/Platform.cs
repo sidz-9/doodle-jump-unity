@@ -4,9 +4,17 @@ using UnityEngine;
 
 public class Platform : MonoBehaviour
 {
+    public static Platform _platformInstance;
+    public static int despawnedPlatformsCount;
     public float jumpSpeed = 10f;
 
     Camera _camera;
+
+    void Awake() {
+        if(_platformInstance == null) {
+            _platformInstance = this;
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -36,6 +44,7 @@ public class Platform : MonoBehaviour
         if(_camera.WorldToViewportPoint(gameObject.transform.position).y < 0){
             Debug.Log(gameObject.ToString() + "Destroyed");
             Destroy(gameObject);
+            despawnedPlatformsCount++;
         }
     }
 }
