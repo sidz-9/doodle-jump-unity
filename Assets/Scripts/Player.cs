@@ -17,22 +17,27 @@ public class Player : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();   
-        _camera = Camera.main; 
-        gameOver = false;
+        _camera = Camera.main;    
+        // gameOver = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        movement = Input.GetAxis("Horizontal") * movementSpeed;
+        if(GameController.instance.gameStarted) {
+            movement = Input.GetAxis("Horizontal") * movementSpeed;
 
-        Vector3 playerViewportPoint = _camera.WorldToViewportPoint(gameObject.transform.position);
+            Vector3 playerViewportPoint = _camera.WorldToViewportPoint(gameObject.transform.position);
 
-        if(gameObject != null) {
-            if(!gameOver && playerViewportPoint.y < 0 || playerViewportPoint.x < 0 || playerViewportPoint.x > 1){
-                // Debug.Log(gameObject.ToString() + " is out of bounds");
-                Destroy(gameObject);
-                gameOver = true;
+            if(gameObject != null) {
+                if(!GameController.instance.gameOver && playerViewportPoint.y < 0 || playerViewportPoint.x < 0 || playerViewportPoint.x > 1){
+                    // Debug.Log(gameObject.ToString() + " is out of bounds");
+                    Destroy(gameObject);
+                    // gameOver = true;
+                    GameController.instance.gameOver = true;
+                    GameController.instance.StopGame();
+
+                }
             }
         }
     }
