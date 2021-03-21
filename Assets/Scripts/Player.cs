@@ -29,14 +29,14 @@ public class Player : MonoBehaviour
 
             Vector3 playerViewportPoint = _camera.WorldToViewportPoint(gameObject.transform.position);
 
-            if(gameObject != null) {
+            if(rb != null) {
                 if(!GameController.instance.gameOver && playerViewportPoint.y < 0 || playerViewportPoint.x < 0 || playerViewportPoint.x > 1){
                     // Debug.Log(gameObject.ToString() + " is out of bounds");
-                    Destroy(gameObject);
+                    // Destroy(gameObject);
                     // gameOver = true;
+                    rb = null;
                     GameController.instance.gameOver = true;
                     GameController.instance.StopGame();
-
                 }
             }
         }

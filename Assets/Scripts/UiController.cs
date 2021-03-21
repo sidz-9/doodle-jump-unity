@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class UiController : MonoBehaviour
 {
@@ -10,8 +11,8 @@ public class UiController : MonoBehaviour
     public GameObject endGamePanel;
     public GameObject tapToStartText;
     public GameObject gameOverImage;
-    public Text scoreText;
-    public Text highScoreText;
+    public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI highScoreText;
 
     void Awake() {
         if(instance == null) {
