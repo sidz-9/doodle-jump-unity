@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Player : MonoBehaviour
 {
+    public static Player _playerInstance;
     Camera _camera;
     Rigidbody2D rb;
 
@@ -13,9 +14,18 @@ public class Player : MonoBehaviour
     public float movementSpeed = 10f;
     bool gameOver;
 
+    public int score;
+
+    void Awake() {
+        if(_playerInstance == null) {
+            _playerInstance = this;
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
+        score = 0;
         rb = GetComponent<Rigidbody2D>();   
         _camera = Camera.main;    
         // gameOver = false;
@@ -28,6 +38,9 @@ public class Player : MonoBehaviour
             movement = Input.GetAxis("Horizontal") * movementSpeed;
 
             Vector3 playerViewportPoint = _camera.WorldToViewportPoint(gameObject.transform.position);
+
+            score = Mathf.Max(score, (int)transform.position.y);
+            // Debug.LogWarning("Your score is: " + score);
 
             if(rb != null) {
                 if(!GameController.instance.gameOver && playerViewportPoint.y < 0 || playerViewportPoint.x < 0 || playerViewportPoint.x > 1){

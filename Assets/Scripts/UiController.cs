@@ -12,6 +12,7 @@ public class UiController : MonoBehaviour
     public GameObject tapToStartText;
     public GameObject gameOverImage;
     public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI inGameScoreText;
     public TextMeshProUGUI highScoreText;
 
     void Awake() {
@@ -30,14 +31,20 @@ public class UiController : MonoBehaviour
     void Update()
     {
         // scoreText.text = ScoreController.instance.score.ToString();
+        inGameScoreText.text = ScoreController.instance.score.ToString();
     }
 
     public void GameStart() {
         tapToStartText.SetActive(false);
+        inGameScoreText.gameObject.SetActive(true);
     }
     public void GameOver() {
+        inGameScoreText.gameObject.SetActive(false);
+        scoreText.text = "Score: " + PlayerPrefs.GetInt("Score").ToString();
+        highScoreText.text = "High Score: " + PlayerPrefs.GetInt("HighScore").ToString();
         endGamePanel.SetActive(true);
-        highScoreText.text = "High Score: " + PlayerPrefs.GetInt("HighScore");
+        Debug.LogWarning("Your score is: " + PlayerPrefs.GetInt("Score"));
+        Debug.LogWarning("Your high score is: " + PlayerPrefs.GetInt("HighScore"));
     }
 
     public void Replay() {

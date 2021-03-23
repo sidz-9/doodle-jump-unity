@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,7 +7,7 @@ public class GameController : MonoBehaviour
     public static GameController instance;
     public bool gameOver;
 
-    public bool gameStarted = false;
+    public bool gameStarted = false ;
 
     void Awake() {
         if (instance == null) {
@@ -37,8 +37,8 @@ public class GameController : MonoBehaviour
     }
 
     public void StopGame() {
+        ScoreController.instance.StopScore();
         UiController.instance.GameOver();
         gameOver = true;
-        // ScoreController.instance.StopScore();
     }
 }
