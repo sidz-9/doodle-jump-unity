@@ -34,22 +34,46 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(GameController.instance.gameStarted) {
-            movement = Input.GetAxis("Horizontal") * movementSpeed;
+        if(Application.platform == RuntimePlatform.Android) {
+            if(GameController.instance.gameStarted) {
+                movement = Input.acceleration.x * movementSpeed;
 
-            Vector3 playerViewportPoint = _camera.WorldToViewportPoint(gameObject.transform.position);
+                Vector3 playerViewportPoint = _camera.WorldToViewportPoint(gameObject.transform.position);
 
-            score = Mathf.Max(score, (int)transform.position.y);
-            // Debug.LogWarning("Your score is: " + score);
+                score = Mathf.Max(score, (int)transform.position.y);
+                // Debug.LogWarning("Your score is: " + score);
 
-            if(rb != null) {
-                if(!GameController.instance.gameOver && playerViewportPoint.y < 0 || playerViewportPoint.x < 0 || playerViewportPoint.x > 1){
-                    // Debug.Log(gameObject.ToString() + " is out of bounds");
-                    // Destroy(gameObject);
-                    // gameOver = true;
-                    rb = null;
-                    GameController.instance.gameOver = true;
-                    GameController.instance.StopGame();
+                if(rb != null) {
+                    if(!GameController.instance.gameOver && playerViewportPoint.y < 0 || playerViewportPoint.x < 0 || playerViewportPoint.x > 1){
+                        // Debug.Log(gameObject.ToString() + " is out of bounds");
+                        // Destroy(gameObject);
+                        // gameOver = true;
+                        rb = null;
+                        GameController.instance.gameOver = true;
+                        GameController.instance.StopGame();
+                    }
+                }
+            }
+        }
+        else
+        {
+            if(GameController.instance.gameStarted) {
+                movement = Input.GetAxis("Horizontal") * movementSpeed;
+
+                Vector3 playerViewportPoint = _camera.WorldToViewportPoint(gameObject.transform.position);
+
+                score = Mathf.Max(score, (int)transform.position.y);
+                // Debug.LogWarning("Your score is: " + score);
+
+                if(rb != null) {
+                    if(!GameController.instance.gameOver && playerViewportPoint.y < 0 || playerViewportPoint.x < 0 || playerViewportPoint.x > 1){
+                        // Debug.Log(gameObject.ToString() + " is out of bounds");
+                        // Destroy(gameObject);
+                        // gameOver = true;
+                        rb = null;
+                        GameController.instance.gameOver = true;
+                        GameController.instance.StopGame();
+                    }
                 }
             }
         }
